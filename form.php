@@ -32,20 +32,20 @@
                 <div class="card-body">
 				
                     <h2 class="title" style="color:green;">Health Buddy Fitness - Registration Form</h2>
-					<div class="row row-space">
-                            <div class="col-2">
-                               <div class="p-t-15">
+					<div class="row row-space" >
+                            <div class="col-2" style="margin-left:135px;">
+                               <div class="p-t-15";>
 							   <a href="members.php" target="_blank">
                             <button class="btn btn--radius-2 btn--blue" type="submit" >View All Members</button> </a>
                         </div>
                             </div>
-                            <div class="col-2">
+                            <!--<div class="col-2">
                                 <div class="p-t-15">
 								<a href="search.php">
                             <button class="btn btn--radius-2 btn--blue">Search Members</button></a>
                         </div>
                             </div>
-                        </div>
+                        </div> -->
                     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 					 	<br/>
 						<br/>
@@ -198,6 +198,7 @@
 <?php
 if(isset($_POST['submit']))
 {
+$posted=true;
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -228,6 +229,14 @@ $mop = $_POST['mop'];
 mysqli_close($conn);
 }
 ?>
+<?php
+    if( $posted ) {
+      if( $SQL ) 
+        echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
+      else
+        echo "<script type='text/javascript'>alert('failed!')</script>";
+    }
+  ?>
 </body>
 </html>
 <!-- end document-->

@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
+<title>Health Buddy Fitness Registration</title>
     <style>
      table{
       border: 1px solid black;
@@ -45,11 +47,10 @@
         "<b>Joining Date:</b> {$row['joining_date']} <br/> ".
 	 "<b>Deposited Fees:</b> {$row['fees_deposited']} <br/> ".
 	 "<b>Payment Method:</b> {$row['payment_method']} <br/> ".
-	 "<b>Subscription:</b> {$row['subscription']} <br/> ".
+	 "<b>Subscription:</b> {$row['subscription']} Months <br/> ".
 	 "<b>Gender:</b> {$row['gender']} <br/> ".
          "--------------------------------------------------------------------------<br/><br/>";
    }
-   <br/>
    echo "Fetched data successfully\n";
    
    mysqli_close($conn);

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
+    <!-- Main CSS-->
+    <link href="css/main.css" rel="stylesheet" media="all">
 <!-- Title Page-->
  <title>Health Buddy Fitness Members</title>
  <style>
@@ -94,7 +97,9 @@ if (mysqli_num_rows($result) > 0) {
 } else {
     echo "0 results";
 }
-
 mysqli_close($conn);
-?>
-           
+?> 
+</table> <br/> <br/>
+<center> <a href="delete.php" target="_blank"> <button class="btn btn--radius-2 btn--blue" type="submit">Delete a Member</button> </a> </center> <br/>
+</body>
+</html>         

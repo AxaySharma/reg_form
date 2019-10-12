@@ -45,7 +45,9 @@
                             <button class="btn btn--radius-2 btn--blue">Search Members</button></a>
                         </div>
                             </div>
+
                         </div>
+			
                     <form method="POST" action="form.php" enctype="multipart/form-data">
 					 	<br/>
 						<br/>

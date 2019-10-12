@@ -32,21 +32,21 @@
                 <div class="card-body">
 				
                     <h2 class="title" style="color:green;">Health Buddy Fitness - Registration Form</h2>
-					<div class="row row-space" >
-                            <div class="col-2" style="margin-left:135px;">
-                               <div class="p-t-15";>
+					<div class="row row-space">
+                            <div class="col-2">
+                               <div class="p-t-15">
 							   <a href="members.php" target="_blank">
                             <button class="btn btn--radius-2 btn--blue" type="submit" >View All Members</button> </a>
                         </div>
                             </div>
-                            <!--<div class="col-2">
+                            <div class="col-2">
                                 <div class="p-t-15">
 								<a href="search.php">
                             <button class="btn btn--radius-2 btn--blue">Search Members</button></a>
                         </div>
                             </div>
-                        </div> -->
-                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        </div>
+                    <form method="POST" action="form.php" enctype="multipart/form-data">
 					 	<br/>
 						<br/>
 						<br/>
@@ -58,10 +58,11 @@
                                     <input class="input--style-4" type="text" name="reg_no">
                                 </div>
                             </div>
+							<input type="hidden" name="size" value="100000">
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Photo</label>
-                                    <input class="input--style-4" type="file" name="photo" accept=".jpg,.jpeg,.png">
+                                    <input class="input--style-4" type="file" name="image" id="image" accept=".jpg,.jpeg,.png">
                                 </div>
                             </div>
                         </div>
@@ -120,19 +121,18 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <label class="label">Subscription  <b>(For how many months?)</b></label>
-		            <input class="input--style-4" type="text" name="package">
-                            <!--<div class="rs-select2 js-select-simple select--no-search">
+                            <label class="label">Package</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="package">
-                                    <option disabled="disabled" selected="selected">Choose option</option> 
+                                    <option disabled="disabled" selected="selected" value="$i">Choose option</option>
 									<?php
 									for ($i = 1; $i<=24; $i++)
 									{ ?>
-                                    <option value=".$i."> <?php echo "$i"."Months"; ?></option>
+                                    <option> <?php echo "$i Months"; ?></option>
                                     <?php } ?>
                                 </select>
 				 <div class="select-dropdown"></div>
-                            </div> -->		
+                            </div>		
                         </div>
 						
 						<div class="row row-space">
@@ -196,17 +196,18 @@
     <!-- Main JS-->
     <script src="js/global.js"></script>
 <?php
-if(isset($_POST['submit']))
+if($_SERVER['REQUEST_METHOD'] == "POST")
 {
-$posted=true;
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "Gym";
+$database = "gym";
 // Create connection
 $conn = mysqli_connect($servername, $username, $password,$database);
+
+ 
 $reg_no = $_POST['reg_no'];
-$photo = $_POST['photo'];
+
 $fname = $_POST['fname'];
 $lname = $_POST['lname'];
 $date1 = $_POST['dob'];
@@ -224,19 +225,32 @@ $add2 = $_POST['add2'];
 $add = $add1." ".$add2;
 $fees_deposited = $_POST['fees_deposited'];
 $mop = $_POST['mop'];
-     $SQL = "INSERT INTO Details (registration_no,fname,lname,dob,address,mobile_no,email,joining_date,fees_deposited,payment_method,subscription,gender,photo) VALUES ('$reg_no','$fname','$lname','$dob','$add','$phone','$email','$doj','$fees_deposited','$mop','$package','$gender','$photo')";
-     $result = mysqli_query($conn,$SQL);
-mysqli_close($conn);
-}
+	  if (isset($_POST['submit'])) {
+  	// Get image name
+  	$image = $_FILES['image']['name'];
+  	
+
+  	// image file directory
+  	$target = "images/".basename($image);
+
+  	
+	$sql = "INSERT INTO details (reg_no,image,fname,lname,dob,gender,email,phone,package,address,joining_date,fees_deposited,mop) VALUES ('$reg_no','$image','$fname','$lname','$dob','$gender','$email','$phone','$package','$add','$doj','$fees_deposited','$mop')";
+  	// execute query
+  	mysqli_query($conn, $sql);
+
+  	if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+  		 echo "Image uploaded successfully";
+  	}else{
+  		echo"Failed to upload image";
+  	}
+  }
+
+
+
+mysqli_close($conn);}
 ?>
-<?php
-    if( $posted ) {
-      if( $SQL ) 
-        echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
-      else
-        echo "<script type='text/javascript'>alert('failed!')</script>";
-    }
-  ?>
+
+
 </body>
 </html>
 <!-- end document-->

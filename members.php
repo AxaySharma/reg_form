@@ -1,59 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
-<title>Health Buddy Fitness Registration</title>
-    <style>
-     table{
-      border: 1px solid black;
-     
-     }
-     th,tr{
-     width: 100px;
-      }
-</style>
-</head>
+<!-- Title Page-->
+ <title>Health Buddy Fitness Members</title>
+ <style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+ </head>
 <body>
-<center> <h2 class="title" style="color:red;">Health Buddy Fitness - Members</h2> </center>
+    
+<h2 class="title" style="color:red;" align="center">Health Buddy Fitness - Members</h2>
 
 <?php
-   $dbhost = 'localhost';
-   $dbuser = 'root';
-   $dbpass = '';
-   $db = 'Gym';
-    $conn = mysqli_connect($dbhost, $dbuser, $dbpass,$db,);
-   
-   if(! $conn ) {
-      die('Could not connect: ' . mysqli_error());
-   }
-   
-   $sql = 'SELECT registration_no, fname, lname,dob,address,mobile_no,email,joining_date,fees_deposited,payment_method,subscription,gender,photo FROM Details';
-   $retval = mysqli_query($conn,$sql);
-   
-   if(! $retval ) {
-      die('Could not get data: ' . mysqli_error($conn));
-   }
-   
-   while($row = mysqli_fetch_array($retval)) {
-      echo "<b>Registration No :</b>{$row['registration_no']}  <br> ".
-         "<b>First Name:</b> {$row['fname']} <br/> ".
-         "<b>Last Name:</b>{$row['lname']} <br/> ".
-	"<b>Date Of Birth:</b> {$row['dob']} <br/> ".
-         "<b>Address</b> : {$row['address']} <br/> ".
-         "<b>Mobile No</b> : {$row['mobile_no']} <br/> ".
-	"<b>Email</b> : {$row['email']} <br/> ".
-        "<b>Joining Date:</b> {$row['joining_date']} <br/> ".
-	 "<b>Deposited Fees:</b> {$row['fees_deposited']} <br/> ".
-	 "<b>Payment Method:</b> {$row['payment_method']} <br/> ".
-	 "<b>Subscription:</b> {$row['subscription']} Months <br/> ".
-	 "<b>Gender:</b> {$row['gender']} <br/> ".
-         "--------------------------------------------------------------------------<br/><br/>";
-   }
-   echo "Fetched data successfully\n";
-   
-   mysqli_close($conn);
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "gym";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 ?>
-</body>
-</html>
+<table id="customers">
+<tr>
+    <th>Reg_No</th>
+	<th>photo</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+	<th>D.o.b</th>
+	<th>Gender</th>
+	<th>Email</th>
+	<th>Phone</th>
+	<th>Package</th>
+	<th>Address</th>
+	<th>D.o.J</th>
+	<th>Fees</th>
+	<th>M.o.P</th>
+  </tr>
+<?php
+$sql = "SELECT * FROM details";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    $i=1;
+    while($row = mysqli_fetch_assoc($result)) {
+        ?>
+		<tr>
+		<td><?php echo $row["reg_no"] ?></td>
+		<td><?php 
+		
+	 echo '<img src="images/'.$row['image'].'" height="100" width="100" />';?>
+		<td><?php echo $row["fname"]; ?></td>
+		<td><?php echo $row["lname"]; ?></td>
+		<td><?php echo $row["dob"]; ?></td>
+		<td><?php echo $row["gender"]; ?></td>
+		<td><?php echo $row["email"]; ?></td>
+		<td><?php echo $row["phone"]; ?></td>
+		<td><?php echo $row["package"]; ?></td>
+		<td><?php echo $row["address"]; ?></td>
+		<td><?php echo $row["joining_date"]; ?></td>
+		<td><?php echo $row["fees_deposited"]; ?></td>
+		<td><?php echo $row["mop"]; ?></td>
+</tr>
+		
+		<?php
+    $i = ++$i;
+    }
+} else {
+    echo "0 results";
+}
+
+mysqli_close($conn);
+?>
+           

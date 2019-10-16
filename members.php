@@ -43,7 +43,6 @@ $dbname = "gym";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -67,7 +66,6 @@ if (!$conn) {
 <?php
 $sql = "SELECT * FROM details";
 $result = mysqli_query($conn, $sql);
-
 if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $i=1;
@@ -89,6 +87,7 @@ if (mysqli_num_rows($result) > 0) {
 		<td><?php echo $row["joining_date"]; ?></td>
 		<td><?php echo $row["fees_deposited"]; ?></td>
 		<td><?php echo $row["mop"]; ?></td>
+		<td><?php echo $row["sub_status"];?></td>
 </tr>
 		
 		<?php

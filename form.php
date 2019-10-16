@@ -227,6 +227,10 @@ $add2 = $_POST['add2'];
 $add = $add1." ".$add2;
 $fees_deposited = $_POST['fees_deposited'];
 $mop = $_POST['mop'];
+$fromdate = new DateTime($doj);
+$curDate = new DateTime();
+$months = $curDate -> diff($fromdate);
+$exp = $months -> format('%m');
 	  if (isset($_POST['submit'])) {
   	// Get image name
   	$image = $_FILES['image']['name'];
@@ -236,9 +240,10 @@ $mop = $_POST['mop'];
   	$target = "images/".basename($image);
 
   	
-	$sql = "INSERT INTO details (reg_no,image,fname,lname,dob,gender,email,phone,package,address,joining_date,fees_deposited,mop) VALUES ('$reg_no','$image','$fname','$lname','$dob','$gender','$email','$phone','$package','$add','$doj','$fees_deposited','$mop')";
+	$sql = "INSERT INTO details (reg_no,image,fname,lname,dob,gender,email,phone,package,address,joining_date,fees_deposited,mop,expiry) VALUES ('$reg_no','$image','$fname','$lname','$dob','$gender','$email','$phone','$package','$add','$doj','$fees_deposited','$mop',$exp)";
   	// execute query
   	mysqli_query($conn, $sql);
+	 
 
   	if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
   		 echo "Image uploaded successfully";

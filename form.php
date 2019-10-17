@@ -206,10 +206,7 @@ $password = "";
 $database = "gym";
 // Create connection
 $conn = mysqli_connect($servername, $username, $password,$database);
-
- 
 $reg_no = $_POST['reg_no'];
-
 $fname = $_POST['fname'];
 $lname = $_POST['lname'];
 $date1 = $_POST['dob'];
@@ -231,6 +228,7 @@ $fromdate = new DateTime($doj);
 $curDate = new DateTime();
 $months = $curDate -> diff($fromdate);
 $exp = $months -> format('%m');
+//$doj = date( 'Y-m-d', $phpdate2 ); */
 	  if (isset($_POST['submit'])) {
   	// Get image name
   	$image = $_FILES['image']['name'];
@@ -240,7 +238,7 @@ $exp = $months -> format('%m');
   	$target = "images/".basename($image);
 
   	
-	$sql = "INSERT INTO details (reg_no,image,fname,lname,dob,gender,email,phone,package,address,joining_date,fees_deposited,mop,expiry) VALUES ('$reg_no','$image','$fname','$lname','$dob','$gender','$email','$phone','$package','$add','$doj','$fees_deposited','$mop',$exp)";
+	$sql = "INSERT INTO details (reg_no,image,fname,lname,dob,gender,email,phone,package,address,joining_date,fees_deposited,mop,expiry) VALUES ('$reg_no','$image','$fname','$lname','$dob','$gender','$email','$phone','$package','$add','$doj','$fees_deposited','$mop','$exp')";
   	// execute query
   	mysqli_query($conn, $sql);
 	 

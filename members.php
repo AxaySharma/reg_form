@@ -62,6 +62,7 @@ if (!$conn) {
 	<th>D.o.J</th>
 	<th>Fees</th>
 	<th>M.o.P</th>
+	<th> Subscription Status </th>
   </tr>
 <?php
 $sql = "SELECT * FROM details";
@@ -75,7 +76,7 @@ if (mysqli_num_rows($result) > 0) {
 		<td><?php echo $row["reg_no"] ?></td>
 		<td><?php 
 		
-	 echo '<img src="images/'.$row['image'].'" height="100" width="100" />';?>
+	 echo '<img src="images/'.$row['image'].'" height="100" width="100" />';?></td>
 		<td><?php echo $row["fname"]; ?></td>
 		<td><?php echo $row["lname"]; ?></td>
 		<td><?php echo $row["dob"]; ?></td>
@@ -87,7 +88,13 @@ if (mysqli_num_rows($result) > 0) {
 		<td><?php echo $row["joining_date"]; ?></td>
 		<td><?php echo $row["fees_deposited"]; ?></td>
 		<td><?php echo $row["mop"]; ?></td>
-		<td><?php echo $row["sub_status"];?></td>
+		<td><?php
+			if($row['package'] < $row['expiry'])
+			{ echo "Expired"; }
+			elseif($row['package'] > $row['expiry'])
+			{ echo "Active"; }
+			else { echo "Expiring this Month";}
+?></td>
 </tr>
 		
 		<?php
